@@ -228,7 +228,14 @@ $navbcolors = $row_nav['bcolors'];
         <!-- Header End -->
         </header>
         <?php
-        $select_stmt_content = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = 18");
+            $template_setting_id = 1;
+            $sql = "SELECT `page7_content` FROM `template_setting` WHERE id = " . $template_setting_id;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $page7_content = $result['page7_content'];
+
+        $select_stmt_content = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = " . $page7_content);
         $select_stmt_content->execute();
         $row_content = $select_stmt_content->fetch(PDO::FETCH_ASSOC);
         $contentbackground = $row_content['colors'];

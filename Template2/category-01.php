@@ -1,9 +1,12 @@
+<?php 
+    require_once('DB_config.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <?php 
 // ดึงข้อมูลจากฐานข้อมูล
-$select_stmt_title = $conn->prepare("SELECT `name` FROM `title` WHERE id = 2");
+$select_stmt_title = $conn->prepare("SELECT `name` FROM `title` WHERE id = 3");
 $select_stmt_title->execute();
 $row_title = $select_stmt_title->fetch(PDO::FETCH_ASSOC);
 $name_title = $row_title['name'];
@@ -13,7 +16,7 @@ $name_title = $row_title['name'];
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
 <?php 
-$select_stmt_title = $conn->prepare("SELECT `image`, `show` FROM `title` WHERE id = 2");
+$select_stmt_title = $conn->prepare("SELECT `image`, `show` FROM `title` WHERE id = 3");
 $select_stmt_title->execute();
 $row_title = $select_stmt_title->fetch(PDO::FETCH_ASSOC);
 $image_title = $row_title['image'];
@@ -22,7 +25,7 @@ $show_title = $row_title['show'];
 if ($show_title === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
 ?>
     <link rel="icon" type="image/png" href="upload/logotitle/<?php echo $image_title; ?>"/>
-<?php   } // ปิดเงื่อนไข if?>	
+<?php   } // ปิดเงื่อนไข if?>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="Template2/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -382,13 +385,13 @@ $navbcolors = $row_nav['bcolors'];
 	</header>
 <?php 
 $template_setting_id = 2;
-$sql = "SELECT `page2_content` FROM `template_setting` WHERE id = " . $template_setting_id;
+$sql = "SELECT `page3_content` FROM `template_setting` WHERE id = " . $template_setting_id;
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-$page2_content = $result['page2_content'];
+$page3_content = $result['page3_content'];
 
-$select_stmt_content = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = " . $page2_content);
+$select_stmt_content = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = " . $page3_content);
 $select_stmt_content->execute();
 $row_content = $select_stmt_content->fetch(PDO::FETCH_ASSOC);
 $contentbackground = $row_content['colors'];
@@ -398,29 +401,41 @@ $contentradius = $row_content['radius'];
 $contentbcolors = $row_content['bcolors'];
 ?>
 	<!-- Breadcrumb -->
-	<div class="container  bg-<?php echo $contentbackground; ?>">
-		<div class="headline bg0 flex-wr-sb-c p-rl-20 p-tb-8  bg-<?php echo $contentbackground; ?>">
+	<div class="container bg-<?php echo $contentbackground; ?>">
+		<div class="bg0 flex-wr-sb-c p-rl-20 p-tb-8 bg-<?php echo $contentbackground; ?>">
 			<div class="f2-s-1 p-r-30 m-tb-6">
-				<a href="index.php" class="breadcrumb-item f1-s-3 cl9 text-<?php echo $content2background; ?>">
+				<a href="index.html" class="breadcrumb-item f1-s-3 cl9 text-<?php echo $content2background; ?>">
 					Home 
 				</a>
-						<?php 
-                        // ดึงข้อมูล "id=3" จากตาราง button
-                        $select_stmt_four = $conn->prepare("SELECT `name`, `connect`, `show` FROM `button` WHERE id = 4");
-                        $select_stmt_four->execute();
-                        $row_four = $select_stmt_four->fetch(PDO::FETCH_ASSOC);
-                        $name_four = $row_four['name'];
-                        $connect_four = $row_four['connect'];
-                        $show_four = $row_four['show'];
-                        // ตรวจสอบค่าในฟิลด์ "show"
-                        if ($show_four === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-                        ?>
-				<span class="breadcrumb-item f1-s-3 cl9 text-<?php echo $content2background; ?>">
-					<?php echo $name_four; ?>
+
+				<a href="category-01.php" class="breadcrumb-item f1-s-3 cl9 text-<?php echo $content2background; ?>">
+					Category
+				</a>
+                <?php
+                    $template_setting_id = 2;
+                    $sql = "SELECT `page3_heading` FROM `template_setting` WHERE id = " . $template_setting_id;
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $page3_heading = $result['page3_heading'];
+
+                    $select_stmt_13 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page3_heading);
+                    $select_stmt_13->execute();
+                    $row_13 = $select_stmt_13->fetch(PDO::FETCH_ASSOC);
+                    $Details_13 = $row_13['Details'];
+                    $connect_13 = $row_13['connect'];
+                    $show_13 = $row_13['show'];
+
+                    // ตรวจสอบค่าในฟิลด์ "show"
+                    if ($show_13 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+                ?>
+				<span class="breadcrumb-item f1-s-3- cl9 text-<?php echo $content2background; ?>">
+					<?php echo $Details_13; ?>
 				</span>
+				<?php   } // ปิดเงื่อนไข if?>
 			</div>
-<?php   } // ปิดเงื่อนไข if?>
-			<div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6 ">
+
+			<div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
 				<input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
 				<button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
 					<i class="zmdi zmdi-search"></i>
@@ -428,167 +443,169 @@ $contentbcolors = $row_content['bcolors'];
 			</div>
 		</div>
 	</div>
-    <?php
-        $template_setting_id = 2;
-        $sql = "SELECT `page2_text_head1` FROM `template_setting` WHERE id = " . $template_setting_id;;
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $page2_text_head1 = $result['page2_text_head1'];
 
-        $select_stmt_nine = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_head1);
-        $select_stmt_nine->execute();
-        $row_nine = $select_stmt_nine->fetch(PDO::FETCH_ASSOC);
-        $Details_nine = $row_nine['Details'];
-        $connect_nine = $row_nine['connect'];
-        $show_nine = $row_nine['show'];
-
-        // ตรวจสอบค่าในฟิลด์ "show"
-        if ($show_nine === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-        ?>
 	<!-- Page heading -->
-	<div class="container p-t-4 p-b-35  bg-<?php echo $contentbackground; ?>">
-		<h2 class="f1-l-1 cl2">
-			 <?php echo $Details_nine; ?>
-		</h2>
-	</div>
-    <?php   } // ปิดเงื่อนไข if?>
-	<!-- Content -->
-	<section class="bg0 p-b-110 bg-<?php echo $contentbackground; ?>">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-7 col-lg-8 p-b-30">
-					<div class="p-r-10 p-r-0-sr991">
-                    <?php
-                            $template_setting_id = 2;
-                            $sql = "SELECT `page2_text_content1` FROM `template_setting` WHERE id = " . $template_setting_id;
-                            $stmt = $conn->prepare($sql);
-                            $stmt->execute();
-                            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                            $page2_text_content1 = $result['page2_text_content1'];
-
-                            $select_stmt_ten = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_content1);
-                            $select_stmt_ten->execute();
-                            $row_ten = $select_stmt_ten->fetch(PDO::FETCH_ASSOC);
-                            $Details_ten = $row_ten['Details'];
-                            $connect_ten = $row_ten['connect'];
-                            $show_ten = $row_ten['show'];
-
-                                // ตรวจสอบค่าในฟิลด์ "show"
-                            if ($show_ten === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-                            ?>
-						<p class="f1-s-11 cl6 p-b-25">
-							<?php echo $Details_ten; ?>
-						</p>
-    <?php   } // ปิดเงื่อนไข if?>
+	<div class="container p-t-4 p-b-40 bg-<?php echo $contentbackground; ?>">
     <?php
         $template_setting_id = 2;
-        $sql = "SELECT `page2_text_head2` FROM `template_setting` WHERE id = " . $template_setting_id;
+        $sql = "SELECT `page3_heading` FROM `template_setting` WHERE id = " . $template_setting_id;
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $page2_text_head2 = $result['page2_text_head2'];
+        $page3_heading = $result['page3_heading'];
 
-        $select_stmt_11 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_head2);
-        $select_stmt_11->execute();
-        $row_11 = $select_stmt_11->fetch(PDO::FETCH_ASSOC);
-        $Details_11 = $row_11['Details'];
-        $connect_11 = $row_11['connect'];
-        $show_11 = $row_11['show'];
+        $select_stmt_13 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page3_heading);
+        $select_stmt_13->execute();
+        $row_13 = $select_stmt_13->fetch(PDO::FETCH_ASSOC);
+        $Details_13 = $row_13['Details'];
+        $connect_13 = $row_13['connect'];
+        $show_13 = $row_13['show'];
 
-        // ตรวจสอบค่าในฟิลด์ "show"
-        if ($show_11 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-      ?>
-						<p class="f1-s-11 cl6 p-b-25">
-							<?php echo $Details_11; ?>
-  <?php   } // ปิดเงื่อนไข if?>
-  <?php
-    $template_setting_id = 2;
-    $sql = "SELECT `page2_text_content2` FROM `template_setting` WHERE id = " . $template_setting_id;
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $page2_text_content2 = $result['page2_text_content2'];
-
-    $select_stmt_12 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_content2);
-    $select_stmt_12->execute();
-    $row_12 = $select_stmt_12->fetch(PDO::FETCH_ASSOC);
-    $Details_12 = $row_12['Details'];
-    $connect_12 = $row_12['connect'];
-    $show_12 = $row_12['show'];
-
-    // ตรวจสอบค่าในฟิลด์ "show"
-    if ($show_12 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-     ?>
-						<p class="f1-s-11 cl6 p-b-25">
-							<?php echo $Details_12; ?>
-						</p>
-						<?php   } // ปิดเงื่อนไข if?>
-					</div>
-				</div>
-				
-				<!-- Sidebar -->
-				<div class="col-md-5 col-lg-4 p-b-30">
-					<div class="p-l-10 p-rl-0-sr991 p-t-5">
-						<!-- Popular Posts -->
-						<div>
-                       <?php 
-						 $template_setting_id = 1;
-                        $sql = "SELECT `page2_section` FROM `template_setting` WHERE id = " . $template_setting_id;
-                        $stmt = $conn->prepare($sql);
-                        $stmt->execute();
-                         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                        $page2_section = $result['page2_section'];
-
-						  $select_stmt_22 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_section);
-						  $select_stmt_22->execute();
-						  $row_22 = $select_stmt_22->fetch(PDO::FETCH_ASSOC);
-						  $Details_22 = $row_22['Details'];
-						  $connect_22 = $row_22['connect'];
-						  $show_22 = $row_22['show'];
-                                        // ตรวจสอบค่าในฟิลด์ "show"
-						if ($show_22 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-                        ?>
-							<div class="how2 how2-cl4 flex-s-c">
-								<h3 class="f1-m-2 cl3 tab01-title">
-									<?php echo $Details_22; ?>
-								</h3>
-							</div>
-							<?php   } // ปิดเงื่อนไข if?>
-
-							<ul class="p-t-35">
-				<?php   
-				  try {
-					$sql = "SELECT * FROM addnewpost WHERE Status = 'Publish' ORDER BY RAND() LIMIT 3";
-					$stmt = $conn->prepare($sql);
-					$stmt->execute();
-					if ($stmt->rowCount() > 0) {
-						// วนลูปผลลัพธ์และแสดงข้อมูลในรูปแบบ HTML
-						while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-							echo '<li class="flex-wr-sb-s p-b-30">';
-							echo '<a href="Page6.php?id=' . $row["id"] . '" class="size-w-10 wrap-pic-w hov1 trans-03">';
-							echo '<img src="upload/' . $row["image"] . '" alt="' . $row["Title"] . '">';
-							echo '<div class="size-w-11">';
-							echo '<h6 class="p-b-4">';
-							echo '<a href="Page6.php?id=' . $row["id"] . '" class="f1-s-5 cl3 hov-cl10 trans-03">' . $row["Title"] . '</a></h6>';
-							echo '<span class="cl8 txt-center p-b-24">';
-							echo '<a href="#" class="f1-s-6 cl8 hov-cl10 trans-03">' . $row["day"] . '</span>';
-							echo '</span></div></li>'; // ปิด div.single-slider
+         // ตรวจสอบค่าในฟิลด์ "show"
+         if ($show_13 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+        ?>
+		<h2 class="f1-l-1 cl2">
+			<?php echo $Details_13; ?>
+		</h2>
+	<?php   } // ปิดเงื่อนไข if?>
+	</div>
+		
+	<!-- Feature post -->
+	<section class="bg0 bg-<?php echo $contentbackground; ?>">
+		<div class="container">
+			<div class="row m-rl--1">
+				<div class="col-md-6 p-rl-1 p-b-2">
+						 <?php   
+                             try {
+                                $sql = "SELECT * FROM addnewpost WHERE Status = 'Publish' ORDER BY RAND() LIMIT 1";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                if ($stmt->rowCount() > 0) {
+                                    // วนลูปผลลัพธ์และแสดงข้อมูลในรูปแบบ HTML
+                                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+										echo '<div class="bg-img1 size-a-3 how1 pos-relative" style="background-image: url(upload/' . $row["image"] . ');">';
+										echo '<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="dis-block how1-child1 trans-03"></a>';
+										echo '<div class="flex-col-e-s s-full p-rl-25 p-tb-20">';
+										echo '<h3 class="how1-child2 m-t-14 m-b-10">';
+										echo '<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="how-txt1 size-a-6 f1-l-1 cl0 hov-cl10 trans-03">' . $row["Title"] . '</a>';
+										echo '</h3>';
+                                        echo '<span class="how1-child2">';
+                                        echo '<span class="f1-s-4 cl11">' . $row["day"] . '</span>';
+                                        echo '<span class="how1-child2">';
+										echo '</div></div></div>';
+                                        }
+                                    } else {
+                                        echo "0 รายการของข่าว";
+                                    }
+                                } catch(PDOException $e) {
+                                    echo "การเชื่อมต่อล้มเหลว: " . $e->getMessage();
+                                }
+                                ?>
+								<div class="col-md-6 p-rl-1">
+									<div class="row m-rl--1">
+								<?php   
+								try {
+                                $sql = "SELECT * FROM addnewpost WHERE Status = 'Publish'  ORDER BY id DESC LIMIT 1";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                if ($stmt->rowCount() > 0) {
+                                    // วนลูปผลลัพธ์และแสดงข้อมูลในรูปแบบ HTML
+                                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+										echo '<div class="col-sm-6 p-rl-1 p-b-2">';
+										echo '<div class="bg-img1 size-a-14 how1 pos-relative" style="background-image: url(upload/' . $row["image"] . ');">';
+                                        echo '<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="dis-block how1-child1 trans-03"></a>';
+                                        echo '<div class="flex-col-e-s s-full p-rl-25 p-tb-20">';
+										echo '<h3 class="how1-child2 m-t-14">';
+                                        echo '<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="how-txt1 size-h-1 f1-m-1 cl0 hov-cl10 trans-03">' . $row["Title"] . '</a>';
+										echo '</h3>';
+										echo '<span class="how1-child2">';
+										echo '<span class="f1-s-4 cl11">' . $row["day"] . '</span>';
+										echo '<span class="how1-child2">';
+										echo '</div></div></div>';
+      
+                                        }
+										} else {
+											echo "0 รายการของข่าว";
+										}
+                            
+								
+                                $sql = "SELECT * FROM addnewpost WHERE Status = 'Publish'  ORDER BY RAND() LIMIT 3";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                if ($stmt->rowCount() > 0) {
+                                    // วนลูปผลลัพธ์และแสดงข้อมูลในรูปแบบ HTML
+                                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+										echo '<div class="col-sm-6 p-rl-1 p-b-2">';
+										echo '<div class="bg-img1 size-a-14 how1 pos-relative" style="background-image: url(upload/' . $row["image"] . ');">';
+										echo '<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="dis-block how1-child1 trans-03"></a>';
+										echo '<div class="flex-col-e-s s-full p-rl-25 p-tb-20">';
+										echo '<h3 class="how1-child2 m-t-14">';
+										echo '<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="how-txt1 size-h-1 f1-m-1 cl0 hov-cl10 trans-03">' . $row["Title"] . '</a>';
+										echo '</h3>';
+                                        echo '<span class="how1-child2">';
+                                        echo '<span class="f1-s-4 cl11">' . $row["day"] . '</span>';
+                                        echo '<span class="how1-child2">';
+										echo '</div></div></div>';
+									}
+								} else {
+									echo "0 รายการของข่าว";
+								}
+							} catch(PDOException $e) {
+								echo "การเชื่อมต่อล้มเหลว: " . $e->getMessage();
 							}
-						} else {
-							echo "0 รายการของข่าว";
-						}
-					} catch(PDOException $e) {
-						echo "การเชื่อมต่อล้มเหลว: " . $e->getMessage();
-					}?>
-							</ul>
-						</div>
+                                ?>
+						
+					
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
+	<!-- Post -->
+	<section class="bg0 p-t-70 p-b-55 bg-<?php echo $contentbackground; ?>">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-10 col-lg-8 p-b-80">
+					<div class="row">
+							<!-- Item latest -->	
+							 <?php   
+                             try {
+                                $sql = "SELECT * FROM addnewpost WHERE Status = 'Publish' ";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                if ($stmt->rowCount() > 0) {
+                                    // วนลูปผลลัพธ์และแสดงข้อมูลในรูปแบบ HTML
+                                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+										echo '<div class="col-sm-6 p-r-25 p-r-15-sr991">';
+										echo '<div class="m-b-45">';
+										echo '<a href="<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="wrap-pic-w hov1 trans-03">';
+										echo '<img src="upload/' . $row["image"] . '" alt="IMG"></a>';
+										echo '<div class="p-t-16">';
+										echo '<h5 class="p-b-5">';
+										echo '<a href="' . (!empty($row["link"]) ? 'Page6.php?id=' . $row["id"] : 'Page4.php?id=' . $row["id"] . '') . '" class="f1-m-3 cl2 hov-cl10 trans-03">' . $row["Title"] . '</a>';
+                                        echo '</h5>';
+                                        echo '<span class="cl8">' . $row["day"] . '</span>';
+										echo '</div></div></div>';
+                                        }
+                                    } else {
+                                        echo "0 รายการของข่าว";
+                                    }
+                                } catch(PDOException $e) {
+                                    echo "การเชื่อมต่อล้มเหลว: " . $e->getMessage();
+                                }
+                                ?>
+					</div>
+
+					<!-- Pagination -->
+					<div class="flex-wr-s-c m-rl--7 p-t-15 d-flex justify-content-center">
+						<a href="#" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7 pagi-active ">1</a>
+						<a href="#" class="flex-c-c pagi-item hov-btn1 trans-03 m-all-7">2</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
     <?php
             $template_setting_id = 2;
             $sql = "SELECT `footer_background` FROM `template_setting` WHERE id = " . $template_setting_id;
@@ -607,15 +624,15 @@ $contentbcolors = $row_content['bcolors'];
             $footerradius = $row_footer['radius'];
             $footerbcolors = $row_footer['bcolors'];
             ?>
-<!-- Footer -->
-<footer>
+	<!-- Footer -->
+<footer class="text-center">
     <div class="bg2 p-t-40 p-b-25 bg-<?php echo $footerbackground; ?>" style="border: <?php echo $footerborder; ?>px solid <?php echo $footerbcolors; ?>; border-radius: <?php echo $footerradius; ?>px;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 p-b-20">
-                    <div class="size-h-3 flex-s-c">
+        <div class="container d-flex justify-content-center">
+            <div class="row">
+                <div class="col-lg-4 p-b-20 mx-auto">
+                    <div class="d-flex justify-content-center mb-3">
                         <a href="index.html">
-                                <?php 
+                             <?php 
                                 $logoResult = $conn->query("SELECT * FROM logo ORDER BY id DESC LIMIT 1");
                                 $logo = $logoResult->fetch(PDO::FETCH_ASSOC);
                                 if ($logo && !empty($logo['image'])) {
@@ -624,8 +641,11 @@ $contentbcolors = $row_content['bcolors'];
                                     echo 'News Website';
                                 }
                                 ?> 
+                        </a>
                     </div>
-                    <?php
+
+                    <div>
+					<?php
                     $template_setting_id = 2;
                     $sql = "SELECT `footer` FROM `template_setting` WHERE id = " . $template_setting_id;
                     $stmt = $conn->prepare($sql);
@@ -642,12 +662,11 @@ $contentbcolors = $row_content['bcolors'];
                     // ตรวจสอบค่าในฟิลด์ "show"
                     if ($show_six === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
                     ?>
-                    <div>
                         <p class="f1-s-1 cl11 p-b-16">
-                            <?php echo $Details_six; ?>
+                           <?php echo $Details_six; ?>
                         </p>
 						 <?php   } // ปิดเงื่อนไข if?>
-                        <?php
+						 <?php
                         $template_setting_id = 2;
                         $sql = "SELECT `footer2` FROM `template_setting` WHERE id = " . $template_setting_id;
                         $stmt = $conn->prepare($sql);
@@ -685,12 +704,11 @@ $contentbcolors = $row_content['bcolors'];
                         // ตรวจสอบค่าในฟิลด์ "show"
                         if ($show_eight === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
                         ?>
-                        <p class="f1-s-1 cl11 p-b-16">
-                           <?php echo $Details_eight; ?>
+							<p class="f1-s-1 cl11 p-b-16">
+                         <?php echo $Details_eight; ?>
                         </p>
 						<?php   } // ปิดเงื่อนไข if?>
-                        <div class="p-t-15">
-                            	<?php   
+<?php   
                                  try {
                                             $sql = "SELECT * FROM icon WHERE `show` = 'on'";
                                             $stmt = $conn->prepare($sql);

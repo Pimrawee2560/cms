@@ -188,7 +188,7 @@ $sql = "SELECT `tab_header` FROM `template_setting` WHERE id = " . $template_set
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-$tab_header = $result['tab_header'];  // เก็บค่าของคอลัมน์ `background_colors`
+$tab_header = $result['tab_header'];  
 
 $select_stmt_header = $conn->prepare("SELECT colors,`tcolors`,`border`, `radius`, `bcolors` FROM `colors` WHERE id = " . $tab_header);
 $select_stmt_header->execute();
@@ -795,8 +795,14 @@ $navbcolors = $row_nav['bcolors'];
                                     <div class="col-lg-12">
                                         <div class="section-tittle mb-30">
                                             <?php
+                                            $template_setting_id = 1;
+                                            $sql = "SELECT `page1_section2` FROM `template_setting` WHERE id = " . $template_setting_id;
+                                            $stmt = $conn->prepare($sql);
+                                            $stmt->execute();
+                                            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                                            $page1_section2= $result['page1_section2'];  
 
-                                            $select_stmt_five = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 5");
+                                            $select_stmt_five = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page1_section2);
                                             $select_stmt_five->execute();
                                             $row_five = $select_stmt_five->fetch(PDO::FETCH_ASSOC);
                                             $Details_five = $row_five['Details'];
@@ -806,8 +812,7 @@ $navbcolors = $row_nav['bcolors'];
                                             if ($show_five === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
                                             ?>
                                                 <h3><?php echo $Details_five; ?></h3>
-                                            <?php   } // ปิดเงื่อนไข if
-                                            ?>
+                                            <?php   } // ปิดเงื่อนไข if?>
                                         </div>
                                     </div>
                                 </div>

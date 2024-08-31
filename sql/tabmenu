@@ -1,0 +1,8 @@
+
+CREATE TABLE `tabmenu` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `heading` varchar(255) NOT NULL,
+  `connect` varchar(255) NOT NULL,
+  `show` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);

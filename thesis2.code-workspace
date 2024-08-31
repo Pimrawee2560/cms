@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "thesis2",
+			"path": "."
+		},
+		{
+			"name": "bootstrap",
+			"path": "../../../Users/Admin/Downloads/crud_pdo-master/bootstrap"
+		},
+		{
+			"name": "js",
+			"path": "../../../Users/Admin/Downloads/crud_pdo-master/js"
+		}
+	],
+	"settings": {}
+}

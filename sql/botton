@@ -1,0 +1,14 @@
+CREATE TABLE `button` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `button` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `connect` varchar(255) NOT NULL,
+  `show` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `button` (`button`, `name`, `connect`, `show`) VALUES 
+('RegisterButton_Homepage', 'Register', 'Register.php', 'on'),
+('LoginButton_Homepage', 'Login', 'Login.php', 'on'),
+('ContactButton_Homepage', 'Contact', 'Page7.php', 'on');
+('AboutButton_Homepage', 'About', 'Page2.php', 'on');

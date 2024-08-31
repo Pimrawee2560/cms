@@ -1,0 +1,17 @@
+CREATE TABLE `related` (
+  `id` int(255) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `logo` varchar(255) NOT NULL,
+  `show` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+
+INSERT INTO `related` (`name`, `show`) VALUES 
+('Page1_TrendingTop', 'on'),
+('Page1_Latestupdate', 'on'),
+('Page1_TrendingNews', 'on'),
+('Page1_VideoArea', 'on'),
+('Page1_4Latestnews', 'on'),
+('Page6_blog1', 'on'),
+('Page6_blog2', 'on'),
+('Page7_Getintouch', 'on'),

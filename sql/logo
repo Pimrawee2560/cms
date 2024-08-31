@@ -1,0 +1,4 @@
+CREATE TABLE logo(
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    image BLOB
+);

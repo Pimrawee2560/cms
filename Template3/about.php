@@ -74,22 +74,35 @@ if ($show_title === 'on') { // เมื่อค่าในฟิลด์ "sh
 
 </style>
 <?php //style
-$select_stmt_bodybackground = $conn->prepare("SELECT colors, `tcolors` FROM `colors` WHERE id = 1");
+$template_setting_id = 3;
+$sql = "SELECT `background_colors` FROM `template_setting` WHERE id = " . $template_setting_id;
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$background_colors = $result['background_colors'];  // เก็บค่าของคอลัมน์ `background_colors`
+
+$select_stmt_bodybackground = $conn->prepare("SELECT colors, `tcolors` FROM `colors` WHERE id = " . $background_colors);
 $select_stmt_bodybackground->execute();
 $row_bodybackground = $select_stmt_bodybackground->fetch(PDO::FETCH_ASSOC);
 $bodybackground = $row_bodybackground['colors'];
 $body2background = $row_bodybackground['tcolors'];
 ?>
-<?php 
-           // ดึงข้อมูล "id=1" จากตาราง menu
-    $select_stmt_conntent = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = 6");
-    $select_stmt_conntent->execute();
-    $row_conntent = $select_stmt_conntent->fetch(PDO::FETCH_ASSOC);
-    $conntentbackground = $row_conntent['colors'];
-    $conntent2background = $row_conntent['tcolors'];
-    $conntentborder = $row_conntent['border'];
-    $conntentradius = $row_conntent['radius'];
-    $conntentbcolors = $row_conntent['bcolors'];
+<?php
+$template_setting_id = 3;
+$sql = "SELECT `page1_content` FROM `template_setting` WHERE id = " . $template_setting_id;
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$page1_content = $result['page1_content'];
+
+$select_stmt_conntent = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = " . $page1_content);
+$select_stmt_conntent->execute();
+$row_conntent = $select_stmt_conntent->fetch(PDO::FETCH_ASSOC);
+$conntentbackground = $row_conntent['colors'];
+$conntent2background = $row_conntent['tcolors'];
+$conntentborder = $row_conntent['border'];
+$conntentradius = $row_conntent['radius'];
+$conntentbcolors = $row_conntent['bcolors'];
 ?>
 <body>
 <div class="main">
@@ -106,10 +119,17 @@ $body2background = $row_bodybackground['tcolors'];
               }
               ?></h1>
       </div>
- <div class="menu_nav">
+      <div class="menu_nav">
         <ul>
 <?php
-$select_stmt_nav = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = 5");
+$template_setting_id = 3;
+$sql = "SELECT `tab_menu` FROM `template_setting` WHERE id = " . $template_setting_id;
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$tab_menu = $result['tab_menu'];  // เก็บค่าของคอลัมน์ `background_colors`
+
+$select_stmt_nav = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id =  " . $tab_menu);
 $select_stmt_nav->execute();
 $row_nav = $select_stmt_nav->fetch(PDO::FETCH_ASSOC);
 $navbackground = $row_nav['colors'];
@@ -161,54 +181,78 @@ try {
     <div class="content_resize bg-<?php echo $conntentbackground; ?>">
       <div class="mainbar">
         <div class="article">
-    <?php 
-    // ดึงข้อมูล "id=3" จากตาราง button
-    $select_stmt_nine = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 9");
-    $select_stmt_nine->execute();
-    $row_nine = $select_stmt_nine->fetch(PDO::FETCH_ASSOC);
-    $Details_nine = $row_nine['Details'];
-    $connect_nine = $row_nine['connect'];
-    $show_nine = $row_nine['show'];
+        <?php
+        $template_setting_id = 3;
+        $sql = "SELECT `page2_text_head1` FROM `template_setting` WHERE id = " . $template_setting_id;;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $page2_text_head1 = $result['page2_text_head1'];
 
-    // ตรวจสอบค่าในฟิลด์ "show"
-    if ($show_nine === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-    ?>
+        $select_stmt_nine = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_head1);
+        $select_stmt_nine->execute();
+        $row_nine = $select_stmt_nine->fetch(PDO::FETCH_ASSOC);
+        $Details_nine = $row_nine['Details'];
+        $connect_nine = $row_nine['connect'];
+        $show_nine = $row_nine['show'];
+
+        // ตรวจสอบค่าในฟิลด์ "show"
+        if ($show_nine === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+        ?>
           <h2> <?php echo $Details_nine; ?></h2>
               <?php   } // ปิดเงื่อนไข if?>
-    <?php 
-    // ดึงข้อมูล "id=3" จากตาราง button
-    $select_stmt_ten = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 10");
-    $select_stmt_ten->execute();
-    $row_ten = $select_stmt_ten->fetch(PDO::FETCH_ASSOC);
-    $Details_ten = $row_ten['Details'];
-    $connect_ten = $row_ten['connect'];
-    $show_ten = $row_ten['show'];
+              <?php
+                $template_setting_id = 3;
+                $sql = "SELECT `page2_text_content1` FROM `template_setting` WHERE id = " . $template_setting_id;
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                $page2_text_content1 = $result['page2_text_content1'];
 
-    // ตรวจสอบค่าในฟิลด์ "show"
-    if ($show_ten === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-    ?>
+                $select_stmt_ten = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_content1);
+                $select_stmt_ten->execute();
+                $row_ten = $select_stmt_ten->fetch(PDO::FETCH_ASSOC);
+                $Details_ten = $row_ten['Details'];
+                $connect_ten = $row_ten['connect'];
+                $show_ten = $row_ten['show'];
+
+                 // ตรวจสอบค่าในฟิลด์ "show"
+                if ($show_ten === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+                ?>
           <div class="clr"></div>
           <p><?php echo $Details_ten; ?></p>
         </div>
        <?php   } // ปิดเงื่อนไข if?>
         <div class="article">
-    <?php 
-    // ดึงข้อมูล "id=3" จากตาราง button
-    $select_stmt_11 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 11");
-    $select_stmt_11->execute();
-    $row_11 = $select_stmt_11->fetch(PDO::FETCH_ASSOC);
-    $Details_11 = $row_11['Details'];
-    $connect_11 = $row_11['connect'];
-    $show_11 = $row_11['show'];
+        <?php
+        $template_setting_id = 3;
+        $sql = "SELECT `page2_text_head2` FROM `template_setting` WHERE id = " . $template_setting_id;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $page2_text_head2 = $result['page2_text_head2'];
 
-    // ตรวจสอบค่าในฟิลด์ "show"
-    if ($show_11 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-    ?>
+        $select_stmt_11 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_head2);
+        $select_stmt_11->execute();
+        $row_11 = $select_stmt_11->fetch(PDO::FETCH_ASSOC);
+        $Details_11 = $row_11['Details'];
+        $connect_11 = $row_11['connect'];
+        $show_11 = $row_11['show'];
+
+        // ตรวจสอบค่าในฟิลด์ "show"
+        if ($show_11 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+      ?>
           <h2><?php echo $Details_11; ?></h2>
                  <?php   } // ปิดเงื่อนไข if?>
-    <?php 
-    // ดึงข้อมูล "id=3" จากตาราง button
-    $select_stmt_12 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 12");
+                 <?php
+    $template_setting_id = 3;
+    $sql = "SELECT `page2_text_content2` FROM `template_setting` WHERE id = " . $template_setting_id;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $page2_text_content2 = $result['page2_text_content2'];
+
+    $select_stmt_12 = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $page2_text_content2);
     $select_stmt_12->execute();
     $row_12 = $select_stmt_12->fetch(PDO::FETCH_ASSOC);
     $Details_12 = $row_12['Details'];
@@ -217,7 +261,7 @@ try {
 
     // ตรวจสอบค่าในฟิลด์ "show"
     if ($show_12 === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-    ?>
+     ?>
          
           <div class="clr"></div>
           <p><?php echo $Details_12; ?></p>
@@ -225,15 +269,22 @@ try {
         </div>
       </div>
       <div class="sidebar">
-        <?php 
-        $select_stmt_five = $conn->prepare("SELECT `name`, `connect`, `show` FROM `button` WHERE id = 5");
-        $select_stmt_five->execute();
-        $row_five = $select_stmt_five->fetch(PDO::FETCH_ASSOC);
-        $name_five = $row_five['name'];
-        $connect_five = $row_five['connect'];
-        $show_five = $row_five['show'];
-                       
-        if ($show_five === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+      <?php 
+        $template_setting_id = 3;
+        $sql = "SELECT `about_button_homepage` FROM `template_setting` WHERE id = " . $template_setting_id;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $about_button_homepage = $result['about_button_homepage'];
+
+        $select_stmt_four = $conn->prepare("SELECT `name`, `connect`, `show` FROM `button` WHERE id = " . $about_button_homepage);
+        $select_stmt_four->execute();
+        $row_four = $select_stmt_four->fetch(PDO::FETCH_ASSOC);
+        $name_four = $row_four['name'];
+        $connect_four = $row_four['connect'];
+        $show_four = $row_four['show'];
+        // ตรวจสอบค่าในฟิลด์ "show"
+        if ($show_four === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
         ?>
         <div class="searchform">
           <form id="formsearch" name="formsearch" method="post" action="#">
@@ -245,8 +296,15 @@ try {
         </div>
         <?php   } // ปิดเงื่อนไข if?>
         <div class="clr"></div>
-<?php
-$select_stmt_tabmenu = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = 31");
+        <?php
+$template_setting_id = 3;
+$sql = "SELECT `tab_menu2` FROM `template_setting` WHERE id = " . $template_setting_id;
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$tab_menu2 = $result['tab_menu2']; 
+
+$select_stmt_tabmenu = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = " . $tab_menu2);
 $select_stmt_tabmenu->execute();
 $row_tabmenu = $select_stmt_tabmenu->fetch(PDO::FETCH_ASSOC);
 $tabmenubackground = $row_tabmenu['colors'];
@@ -312,8 +370,16 @@ try {
       <div class="clr"></div>
     </div>
   </div>
-<?php 
-$select_stmt_footer = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = 30");
+  <?php
+$template_setting_id = 3;
+$sql = "SELECT `footer_background` FROM `template_setting` WHERE id = " . $template_setting_id;
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$footer_background = $result['footer_background'];  // เก็บค่าของคอลัมน์ `background_colors`
+
+
+$select_stmt_footer = $conn->prepare("SELECT colors, `tcolors`, `border`, `radius`, `bcolors` FROM `colors` WHERE id = " . $footer_background);
 $select_stmt_footer->execute();
 $row_footer = $select_stmt_footer->fetch(PDO::FETCH_ASSOC);
 $footerbackground = $row_footer['colors'];
@@ -326,35 +392,41 @@ $footerbcolors = $row_footer['bcolors'];
   <div class="footer_resize bg-<?php echo $footerbackground; ?>" style="width: 53%; height: 200px; padding: 10px;">
     <div class="col c3">
       <div class="message-box">
-        	<?php 
-          $select_stmt_six = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 6");
-          $select_stmt_six->execute();
-          $row_six = $select_stmt_six->fetch(PDO::FETCH_ASSOC);
-          $Details_six = $row_six['Details'];
-          $connect_six = $row_six['connect'];
-          $show_six = $row_six['show'];
-          if ($show_six === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-          ?>
+      <?php
+        $template_setting_id = 3;
+        $sql = "SELECT `footer` FROM `template_setting` WHERE id = " . $template_setting_id;
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $footer = $result['footer'];
+
+        $select_stmt_six = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $footer);
+        $select_stmt_six->execute();
+        $row_six = $select_stmt_six->fetch(PDO::FETCH_ASSOC);
+        $Details_six = $row_six['Details'];
+        $connect_six = $row_six['connect'];
+        $show_six = $row_six['show'];
+        // ตรวจสอบค่าในฟิลด์ "show"
+        if ($show_six === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+        ?>
         <p><?php echo $Details_six; ?></p> <?php   } // ปิดเงื่อนไข if?>
         <?php
-        $select_stmt_seven = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 7");
-        $select_stmt_seven->execute();
-        $row_seven = $select_stmt_seven->fetch(PDO::FETCH_ASSOC);
-        $Details_seven = $row_seven['Details'];
-        $connect_seven = $row_seven['connect'];
-        $show_seven = $row_seven['show'];
-        if ($show_seven === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-        ?>
-        <p><?php echo $Details_seven; ?></p><?php   } // ปิดเงื่อนไข if?>
-        <?php 
-        $select_stmt_eight = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = 8");
-        $select_stmt_eight->execute();
-        $row_eight = $select_stmt_eight->fetch(PDO::FETCH_ASSOC);
-        $Details_eight = $row_eight['Details'];
-        $connect_eight = $row_eight['connect'];
-        $show_eight = $row_eight['show'];
-        if ($show_eight === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
-        ?>
+            $template_setting_id = 3;
+            $sql = "SELECT `footer3` FROM `template_setting` WHERE id = " . $template_setting_id;
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $footer3 = $result['footer3'];
+
+            $select_stmt_eight = $conn->prepare("SELECT `Details`, `connect`, `show` FROM `text` WHERE id = " . $footer3);
+            $select_stmt_eight->execute();
+            $row_eight = $select_stmt_eight->fetch(PDO::FETCH_ASSOC);
+            $Details_eight = $row_eight['Details'];
+            $connect_eight = $row_eight['connect'];
+            $show_eight = $row_eight['show'];
+            // ตรวจสอบค่าในฟิลด์ "show"
+            if ($show_eight === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
+            ?>
         <p><?php echo $Details_eight; ?></p><?php   } // ปิดเงื่อนไข if?>
         <div class="social-icons">
         <?php   

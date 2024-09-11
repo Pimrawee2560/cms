@@ -335,94 +335,111 @@ function getNextAvailableDirectoryNew($sourceDir)
                         <strong>Success! <?php echo $copyMsg; ?></strong>
                     </div>
                 <?php } ?>
-                <!-- Overlay effect when opening sidebar on small screens -->
-                <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+                
+        <style>
+        .template-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        .template-item img {
+            width: 100%;
+            border-radius: 5%;
+        }
+        .btn-spacing {
+            margin-right: 10px;
+        }
+        .w3-main {
+            margin-left: 20px;
+        }
+        </style>
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-                <!-- !PAGE CONTENT! -->
-                <div class="w3-main" style="margin-left:20px"> <!-- Adjusted margin-left value -->
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main">
 
-                    <!-- Header -->
-                    <header id="portfolio">
-                        <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-                        <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-                        <div class="w3-container">
-                            <h1><b>Template</b></h1>
-                            <div class="w3-section w3-bottombar w3-padding-16">
-                                <span class="w3-margin-right">Filter:</span>
-                                <button class="w3-button w3-black">ALL</button>
-                            </div>
-                        </div>
-                    </header>
-                    <form method="post" class="form-horizontal mt-5">
-                        <div class="w3-third w3-container w3-margin-bottom">
-                            <img src="upload\tempic\tem2.png" alt="Norway" style="width:100%; border-radius: 5%;">
-                            <div class="w3-container w3-white">
-                                <p><b>Template News First</b></p>
-                                <p>Template HTML/CSS</p>
-                                <input type="hidden" name="update_id" value="1"> <!-- กำหนดค่า update_id เป็น 1 -->
-                                <input type="submit" name="btn_update" class="btn btn-success" value="Use"> <!-- ปุ่ม Use -->
-                                <input type="submit" name="btn_copy" class="btn btn-secondary btn-spacing" value="Copy">
-                            </div>
-                        </div>
-                    </form>
-                    <form method="post" class="form-horizontal mt-5">
-                        <div class="w3-third w3-container w3-margin-bottom">
-                            <img src="upload\tempic\tem1.png" alt="Norway" style="width:100%; border-radius: 5%;">
-                            <div class="w3-container w3-white">
-                                <p><b>Template News Two</b></p>
-                                <p>Template HTML/CSS</p>
-                                <input type="hidden" name="update_id" value="2"> <!-- กำหนดค่า update_id เป็น 2 -->
-                                <input type="submit" name="btn_update" class="btn btn-success" value="Use"> <!-- ปุ่ม Use -->
-                                <input type="submit" name="btn_copy" class="btn btn-secondary btn-spacing" value="Copy">
-                            </div>
-                        </div>
-                    </form>
-                    <form method="post" class="form-horizontal mt-5">
-                        <div class="w3-third w3-container w3-margin-bottom">
-                            <img src="upload\tempic\tem3.png" alt="Norway" style="width:100%; border-radius: 5%;">
-                            <div class="w3-container w3-white">
-                                <p><b>Template News Three</b></p>
-                                <p>Template HTML/CSS</p>
-                                <input type="hidden" name="update_id" value="3"> <!-- กำหนดค่า update_id เป็น 3 -->
-                                <input type="submit" name="btn_update" class="btn btn-success" value="Use"> <!-- ปุ่ม Use -->
-                                <input type="submit" name="btn_copy" class="btn btn-secondary btn-spacing" value="Copy">
-                            </div>
-                        </div>
-                    </form>
-
-
-                    <!-- First Photo Grid-->
-                    <?php
-                    try {
-                        // ดึงข้อมูลที่มี Status เป็น 'Publish' และที่ฟิลด์ link ว่างเปล่าหรือเป็น NULL
-                        // แสดงข้อมูลทั้งหมด ยกเว้น ID ที่ 1, 2, 3
-                        $sql = "SELECT * FROM `template` WHERE id NOT IN (1, 2, 3)";
-                        $stmt = $conn->prepare($sql);
-                        $stmt->execute();
-
-                        if ($stmt->rowCount() > 0) {
-                            // วนลูปผลลัพธ์และแสดงข้อมูลในรูปแบบ HTML
-                            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                echo '<form method="post" class="form-horizontal mt-5">';
-                                echo '<div class="w3-third w3-container w3-margin-bottom">';
-                                echo '<img src="upload/tempic/' . $row["image"] . '" alt="Norway" style="width:100%; border-radius: 5%;">';
-                                echo '<div class="w3-container w3-white">';
-                                echo '<p><b>' . $row["Template"] . '</b></p>';
-                                echo '<p>Template HTML/CSS</p>';
-                                echo '<input type="hidden" name="update_id" value="' . $row["id"] . '">';
-                                echo '<input type="submit" name="btn_update" class="btn btn-success btn-spacing" value="Use">';
-                                echo '</div>';
-                                echo '</div></form>';
-                            }
-                        } else {
-                            echo "";
-                        }
-                    } catch (PDOException $e) {
-                        echo "การเชื่อมต่อล้มเหลว: " . $e->getMessage();
-                    }
-                    ?>
+        <!-- Header -->
+        <header id="portfolio">
+            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
+            <div class="w3-container">
+                <h1><b>Template</b></h1>
+                <div class="w3-section w3-bottombar w3-padding-16">
+                    <span class="w3-margin-right">Filter:</span>
+                    <button class="w3-button w3-black">ALL</button>
                 </div>
             </div>
+        </header>
+
+        <div class="template-container">
+            <!-- Static Templates -->
+            <form method="post" class="form-horizontal">
+                <div class="template-item">
+                    <img src="upload/tempic/tem2.png" alt="Template 2">
+                    <div class="w3-container w3-white">
+                        <p><b>Template News First</b></p>
+                        <p>Template HTML/CSS</p>
+                        <input type="hidden" name="update_id" value="1">
+                        <input type="submit" name="btn_update" class="btn btn-success" value="Use">
+                        <input type="submit" name="btn_copy" class="btn btn-secondary btn-spacing" value="Copy">
+                    </div>
+                </div>
+            </form>
+
+            <form method="post" class="form-horizontal">
+                <div class="template-item">
+                    <img src="upload/tempic/tem1.png" alt="Template 1">
+                    <div class="w3-container w3-white">
+                        <p><b>Template News Two</b></p>
+                        <p>Template HTML/CSS</p>
+                        <input type="hidden" name="update_id" value="2">
+                        <input type="submit" name="btn_update" class="btn btn-success" value="Use">
+                        <input type="submit" name="btn_copy" class="btn btn-secondary btn-spacing" value="Copy">
+                    </div>
+                </div>
+            </form>
+
+            <form method="post" class="form-horizontal">
+                <div class="template-item">
+                    <img src="upload/tempic/tem3.png" alt="Template 3">
+                    <div class="w3-container w3-white">
+                        <p><b>Template News Three</b></p>
+                        <p>Template HTML/CSS</p>
+                        <input type="hidden" name="update_id" value="3">
+                        <input type="submit" name="btn_update" class="btn btn-success" value="Use">
+                        <input type="submit" name="btn_copy" class="btn btn-secondary btn-spacing" value="Copy">
+                    </div>
+                </div>
+            </form>
+
+            <!-- Dynamic Templates from Database -->
+            <?php
+            try {
+                $sql = "SELECT * FROM `template` WHERE id NOT IN (1, 2, 3)";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+
+                if ($stmt->rowCount() > 0) {
+                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                        echo '<form method="post" class="form-horizontal">';
+                        echo '<div class="template-item">';
+                        echo '<img src="upload/tempic/' . htmlspecialchars($row["image"]) . '" alt="' . htmlspecialchars($row["Template"]) . '">';
+                        echo '<div class="w3-container w3-white">';
+                        echo '<p><b>' . htmlspecialchars($row["Template"]) . '</b></p>';
+                        echo '<p>Template HTML/CSS</p>';
+                        echo '<input type="hidden" name="update_id" value="' . htmlspecialchars($row["id"]) . '">';
+                        echo '<input type="submit" name="btn_update" class="btn btn-success btn-spacing" value="Use">';
+                        echo '</div>';
+                        echo '</div></form>';
+                    }
+                } else {
+                    echo "<p>No templates available.</p>";
+                }
+            } catch (PDOException $e) {
+                echo "Connection failed: " . $e->getMessage();
+            }
+            ?>
         </div>
     </div>
     <script>

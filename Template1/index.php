@@ -72,23 +72,40 @@ require_once('DB_config.php');
 
         .single-video {
             position: relative;
-            display: inline-block;
+            flex: 1 1 300px; /* กำหนดขนาดพื้นฐานของกรอบวิดีโอ */
+            box-sizing: border-box; /* รวม padding และ border ในการคำนวณขนาด */
+            margin: 10px; /* ระยะห่างระหว่างกรอบวิดีโอ */
+            background-color: #f0f0f0; /* สีพื้นหลังของกรอบวิดีโอ */
+            overflow: hidden; /* ซ่อนเนื้อหาที่ล้นออกมาจากกรอบ */
+        }
+
+        .single-video img {
+            width: 100%;
+            height: 600px; /* กำหนดความสูงที่ต้องการ */
+            object-fit: cover; /* ควบคุมการแสดงผลของภาพเพื่อให้ครอปตามขนาดที่กำหนด */
+            display: block;
+        }
+
+        .youtube-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: white;
         }
 
         .video-title {
             position: absolute;
-            top: 630px;
-            /* Adjust this value as needed */
+            bottom: 10px; /* ตำแหน่ง title ที่ด้านล่าง */
             left: 15px;
-            /* Adjust this value as needed */
             color: white;
             font-weight: bold;
-            font-size: 24px;
-            /* Adjust this value as needed */
+            font-size: 16px; /* ขนาดฟอนต์ของชื่อวิดีโอ */
             margin: 0;
             padding: 5px;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Optional: adds a semi-transparent background to make the text more readable */
+            background-color: rgba(0, 0, 0, 0.5); /* พื้นหลังที่โปร่งใส */
+            border-radius: 5px; /* มุมมน */
         }
 
         .weekly2-news-active {
@@ -864,7 +881,7 @@ $navbcolors = $row_nav['bcolors'];
                 // ตรวจสอบค่าในฟิลด์ "show"
                 if ($show_showfour === 'on') { // เมื่อค่าในฟิลด์ "show" เป็น "on" เท่านั้น
                 ?>
-                    <div class="youtube-area video-padding d-none d-sm-block bg-<?php echo $content22background; ?>">
+                    <div class="youtube-area video-padding d-none d-sm-block bg-<?php echo htmlspecialchars($content22background); ?>">
                         <div class="container">
                             <div class="row">
                                 <div class="col-12">
@@ -883,18 +900,16 @@ $navbcolors = $row_nav['bcolors'];
                                                                 // วนลูปผลลัพธ์และแสดงข้อมูลในรูปแบบ HTML
                                                                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                                                     echo '<div class="single-video">';
-                                                                    echo '<a href="video/' . $row["video"] . '" type="video/mp4">';
-                                                                    echo '<div style="position: relative; display: inline-block;">';
-                                                                    echo '<img src="upload/' . $row["image"] . '" alt="' . $row["Title"] . '">';
-                                                                    echo '<h4 class="video-title">' . $row["Title"] . ' | ' . $row["day"] . '</h4>';
-                                                                    echo '<i class="fab fa-youtube youtube-icon" style="position: absolute; top: 320px; left: 50%; transform: translateX(-50%); font-size: 50px; color: white;"></i>';
+                                                                    echo '<a href="video/' . htmlspecialchars($row["video"]) . '" type="video/mp4">';
+                                                                    echo '<div class="video-wrapper">';
+                                                                    echo '<img src="upload/' . htmlspecialchars($row["image"]) . '" alt="' . htmlspecialchars($row["Title"]) . '">';
+                                                                    echo '<i class="fab fa-youtube youtube-icon"></i>';
                                                                     echo '</div>';
                                                                     echo '</a>';
                                                                     echo '<div class="video-intro">';
-                                                                    echo '<h5></h5>';
+                                                                    echo '<h4 class="video-title">' . htmlspecialchars($row["Title"]) . ' | ' . htmlspecialchars($row["day"]) . '</h4>';
                                                                     echo '</div>';
                                                                     echo '</div>'; // ปิด div.single-video
-
                                                                 }
                                                             } else {
                                                                 echo "0 รายการของข่าว";
@@ -909,6 +924,9 @@ $navbcolors = $row_nav['bcolors'];
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
                             <?php   } // ปิดเงื่อนไข if
                             ?>
                             <!-- End Start Video area-->
